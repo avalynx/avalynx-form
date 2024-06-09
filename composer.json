@@ -1,0 +1,30 @@
+{
+    "name": "avalynx/avalynx-form",
+    "description": "AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.",
+    "keywords": [
+        "avalynx",
+        "form",
+        "validation",
+        "input",
+        "bootstrap",
+        "bootstrap5",
+        "component"
+    ],
+    "homepage": "https://github.com/avalynx/avalynx-form",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juergen Schwind an the Avalynx-Form authors",
+            "homepage": "https://github.com/avalynx/avalynx-form/graphs/contributors"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "^5.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/avalynx/avalynx-form.git"
+        }
+    ]
+}

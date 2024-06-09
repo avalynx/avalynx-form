@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de" data-bs-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form | AvalynxForm Example</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Highlight.js 11.9 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/languages/javascript.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/styles/stackoverflow-light.min.css" id="hljsTheme">
+    <script>hljs.highlightAll();</script>
+
+    <script src="../src/js/avalynx-form.js"></script>
+
+    <!-- AvalynxForm 0.0.1 -->
+    <script src="https://cdn.jsdelivr.net/npm/avalynx-form@0.0.1/dist/js/avalynx-form.min.js"></script>
+
+    <!-- Example helper -->
+    <link href="./css/helper.css" rel="stylesheet">
+    <script src="./js/helper.js"></script>
+</head>
+<body>
+
+<div class="container py-5">
+
+    <a class="btn btn-secondary float-end m-3" href=".">Back</a>
+    <button id="modeToggle" class="btn btn-primary float-end m-3">Toggle to Dark Mode</button>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="container" id="avalynx-form"></div>
+    <br/>
+    <br/>
+    <div class="alert alert-info">
+        This is an example of the AvalynxForm. It is a simple form with some fields. The form validation is fetched from a PHP script.
+    </div>
+
+    <form id="form_validation" action="php/result.php" method="POST">
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="customer_form">Form:</label>
+            <select class="form-select" name="customer_form" id="customer_form">
+                <option value="">Please select...</option>
+                <option value="ms">Ms.</option>
+                <option value="mr">Mr.</option>
+            </select>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="customer_title">Title:</label>
+            <input type="text" name="customer_title" id="customer_title" class="form-control"/>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="customer_firstname">Firstname:</label>
+            <input type="text" name="customer_firstname" id="customer_firstname" class="form-control "/>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="customer_lastname">Lastname:</label>
+            <input type="text" name="customer_lastname" id="customer_lastname" class="form-control "/>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-group mb-3">
+            <div class="form-check">
+                <input type="checkbox" name="customer_accept_terms" id="customer_accept_terms" class="form-check-input" value="1"/>
+                <label class="form-check-label" for="customer_accept_terms">Accept terms</label>
+                <span class="invalid-feedback"></span>
+            </div>
+        </div>
+
+        <!-- Radio -->
+        <div class="form-group mb-3">
+            <label class="form-label">Newsletter subscription:</label>
+            <div class="form-check">
+                <input type="radio" name="customer_newsletter" id="customer_newsletter_yes" value="1" class="form-check-input"/>
+                <label class="form-check-label" for="customer_newsletter_yes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" name="customer_newsletter" id="customer_newsletter_no" value="0" class="form-check-input"/>
+                <label class="form-check-label" for="customer_newsletter_no">No</label>
+            </div>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-group mb-3">
+            <label class="form-label">Where did you hear about us?</label>
+            <div class="form-check">
+                <input type="checkbox" name="customer_hear_about['friends']" id="customer_hear_about1" value="1" class="form-check-input"/>
+                <label class="form-check-label" for="customer_hear_about1">Friends</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" name="customer_hear_about['internet']" id="customer_hear_about2" value="1" class="form-check-input"/>
+                <label class="form-check-label" for="customer_hear_about2">Internet</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" name="customer_hear_about['other']" id="customer_hear_about3" value="1" class="form-check-input"/>
+                <label class="form-check-label" for="customer_hear_about3">Other</label>
+            </div>
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </form>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = new AvalynxForm('form_validation', {
+                apiParams: {key1: 'value1', key2: 'value2'},
+                onSuccess: (response) => {
+                    alert('Validation successful');
+                },
+                onError: (response) => {
+                    console.log('Form submission failed:', response);
+                }
+            });
+        });
+
+    </script>
+    <br/>
+    <br/>
+    <br/>
+    <h3>Source of example<a class="p-1 float-end btn btn-secondary btn-small" id="copyButton">Copy to clipboard</a></h3>
+    <pre><code class="language-javascript" id="codeBlock">
+document.addEventListener('DOMContentLoaded', () => {
+    const form = new AvalynxForm('form_validation', {
+        apiParams: {key1: 'value1', key2: 'value2'},
+        onSuccess: (response) => {
+            alert('Validation successful');
+        },
+        onError: (response) => {
+            console.log('Form submission failed:', response);
+        }
+    });
+});
+	</code></pre>
+
+    <a href="https://github.com/avalynx/avalynx-form" target="_blank" class="btn btn-primary">AvalynxForm on
+        GitHub</a> <a href="https://github.com/avalynx/" target="_blank" class="btn btn-primary">Avalynx on GitHub</a>
+
+</div>
