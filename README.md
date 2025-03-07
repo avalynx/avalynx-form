@@ -14,6 +14,7 @@ Here's a simple example of how to use AvalynxForm in your project:
 
 * [Overview](https://avalynx-form.jbs-newmedia.de/examples/index.html)
 * [Form](https://avalynx-form.jbs-newmedia.de/examples/form.html)
+* [Form with slow response](https://avalynx-form.jbs-newmedia.de/examples/form-slow-response.html)
 
 ## Installation
 
