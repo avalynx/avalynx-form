@@ -41,7 +41,7 @@ Replace `path/to/avalynx-form.js` with the actual path to the file in your proje
 AvalynxForm is also available via [jsDelivr](https://www.jsdelivr.com/). You can include it in your project like this:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@0.0.2/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.0/dist/js/avalynx-form.js"></script>
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
@@ -72,6 +72,16 @@ After installing, you can import AvalynxForm into your JavaScript file like this
 
 ```javascript
 import { AvalynxForm } from 'avalynx-form';
+```
+
+Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
+
+## Installation via Symfony AssetComposer
+
+More information about the Symfony AssetComposer Bundle can be found [here](https://github.com/jbsnewmedia/asset-composer-bundle).
+
+```twig
+{% do addAssetComposer('avalynx/avalynx-form/dist/js/avalynx-form.js') %}
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
