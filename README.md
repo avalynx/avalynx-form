@@ -15,6 +15,7 @@ Here's a simple example of how to use AvalynxForm in your project:
 * [Overview](https://avalynx-form.jbs-newmedia.de/examples/index.html)
 * [Form](https://avalynx-form.jbs-newmedia.de/examples/form.html)
 * [Form with slow response](https://avalynx-form.jbs-newmedia.de/examples/form-slow-response.html)
+* [Form with AvalynxSelect](https://avalynx-form.jbs-newmedia.de/examples/form-with-avalynx-select.html)
 
 ## Installation
 
@@ -41,7 +42,7 @@ Replace `path/to/avalynx-form.js` with the actual path to the file in your proje
 AvalynxForm is also available via [jsDelivr](https://www.jsdelivr.com/). You can include it in your project like this:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.0/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.1/dist/js/avalynx-form.js"></script>
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.

@@ -3,7 +3,7 @@
  *
  * AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
  *
- * @version 1.0.0
+ * @version 1.0.1
  * @license MIT
  * @author https://github.com/avalynx/avalynx-datatable/graphs/contributors
  * @website https://github.com/avalynx/
@@ -120,7 +120,7 @@ class AvalynxForm {
     }
 
     showInvalidFeedback(key, value) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -135,7 +135,7 @@ class AvalynxForm {
     }
 
     clearInvalidFeedback(key) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -174,4 +174,8 @@ class AvalynxForm {
             this.form.appendChild(overlay);
         }
     }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = AvalynxForm;
 }

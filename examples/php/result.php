@@ -11,6 +11,7 @@ foreach (['customer_accept_terms', 'customer_newsletter', 'customer_hear_about']
 }
 
 $data['customer_form'] = (isset($_POST['customer_form']))?$_POST['customer_form']:'';
+$data['avalynxselect'] = (isset($_POST['avalynxselect']))?$_POST['avalynxselect']:'';
 $data['customer_title'] = (isset($_POST['customer_title']))?$_POST['customer_title']:'';
 $data['customer_firstname'] = (isset($_POST['customer_firstname']))?$_POST['customer_firstname']:'';
 $data['customer_lastname'] = (isset($_POST['customer_lastname']))?$_POST['customer_lastname']:'';
@@ -22,6 +23,12 @@ if (mb_strlen($data['customer_form']) === 0) {
     $json['invalid']['customer_form'] = 'Please select your form.';
 } elseif (in_array($data['customer_form'], ['mr', 'mrs'])) {
     $json['invalid']['customer_form'] = 'Please select a valid form.';
+}
+
+if (mb_strlen($data['avalynxselect']) === 0) {
+    $json['invalid']['avalynxselect'] = 'Please select your person.';
+} elseif (in_array($data['avalynxselect'], ['option1', 'option2', 'option3'])) {
+    $json['invalid']['avalynxselect'] = 'Please select a valid option.';
 }
 
 if (mb_strlen($data['customer_title']) === 0) {

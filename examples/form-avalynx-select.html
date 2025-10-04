@@ -19,6 +19,9 @@
     <!-- AvalynxForm 1.0.1 -->
     <script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.1/dist/js/avalynx-form.min.js"></script>
 
+    <!-- AvalynxSelect 1.1.0 -->
+    <script src="https://cdn.jsdelivr.net/npm/avalynx-select@1.1.0/dist/js/avalynx-select.min.js"></script>
+
     <!-- Example helper -->
     <link href="./css/helper.css" rel="stylesheet">
     <script src="./js/helper.js"></script>
@@ -38,7 +41,7 @@
     <br/>
     <br/>
     <div class="alert alert-info">
-        This is an example of the AvalynxForm. It is a simple form with some fields. The form validation is fetched from a PHP script.
+        This is an example of the AvalynxForm. It is a simple form with some fields and an AvalynxSelect field. The form validation is fetched from a PHP script.
     </div>
 
     <form id="form_validation" action="php/result.php" method="POST">
@@ -49,6 +52,21 @@
                 <option value="">Please select...</option>
                 <option value="ms">Ms.</option>
                 <option value="mr">Mr.</option>
+            </select>
+            <span class="invalid-feedback"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="avalynxselect">Person (with AvalynxSelect):</label>
+            <select class="form-select avalynx-select" name="avalynxselect" id="avalynxselect">
+                <option value="">Select a person</option>
+                <option value="1">Thomas Fischer</option>
+                <option value="2">John Doe</option>
+                <option value="3">Jane Doe</option>
+                <option value="4">Max Mustermann</option>
+                <option value="5">Erika Mustermann</option>
+                <option value="6">Hans Müller</option>
+                <option value="7">Anna Müller</option>
             </select>
             <span class="invalid-feedback"></span>
         </div>
@@ -118,6 +136,11 @@
     <script>
 
         document.addEventListener('DOMContentLoaded', () => {
+            const avalynxSelect = new AvalynxSelect('#avalynxselect', {
+                scrollItems: 5,
+                liveSearch: true
+            });
+
             const form = new AvalynxForm('form_validation', {
                 apiParams: {key1: 'value1', key2: 'value2'},
                 onSuccess: (response) => {
@@ -136,6 +159,11 @@
     <h3>Source of example<a class="p-1 float-end btn btn-secondary btn-small" id="copyButton">Copy to clipboard</a></h3>
     <pre><code class="language-javascript" id="codeBlock">
 document.addEventListener('DOMContentLoaded', () => {
+    const avalynxSelect = new AvalynxSelect('#avalynxselect', {
+        scrollItems: 5,
+        liveSearch: true
+    });
+
     const form = new AvalynxForm('form_validation', {
         apiParams: {key1: 'value1', key2: 'value2'},
         onSuccess: (response) => {

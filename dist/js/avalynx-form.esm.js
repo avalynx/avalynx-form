@@ -19,6 +19,8 @@
  *
  */
 
+import * as bootstrap from 'bootstrap';
+
 export class AvalynxForm {
     constructor(id, options = {}) {
         this.form = document.getElementById(id);
@@ -120,7 +122,7 @@ export class AvalynxForm {
     }
 
     showInvalidFeedback(key, value) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -135,7 +137,7 @@ export class AvalynxForm {
     }
 
     clearInvalidFeedback(key) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
