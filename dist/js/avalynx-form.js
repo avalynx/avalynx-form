@@ -120,7 +120,7 @@ class AvalynxForm {
     }
 
     showInvalidFeedback(key, value) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -135,7 +135,7 @@ class AvalynxForm {
     }
 
     clearInvalidFeedback(key) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}["]`);
+        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -174,4 +174,8 @@ class AvalynxForm {
             this.form.appendChild(overlay);
         }
     }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = AvalynxForm;
 }
