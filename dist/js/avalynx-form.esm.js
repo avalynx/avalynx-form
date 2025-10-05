@@ -3,7 +3,7 @@
  *
  * AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
  *
- * @version 1.0.0
+ * @version 1.0.2
  * @license MIT
  * @author https://github.com/avalynx/avalynx-datatable/graphs/contributors
  * @website https://github.com/avalynx/
@@ -27,6 +27,9 @@ export class AvalynxForm {
         if (this.form === null) {
             console.error("AvalynxForm: Element with id '" + id + "' not found");
             return;
+        }
+        if (options === null || typeof options !== 'object') {
+            options = {};
         }
         this.id = id;
         this.options = {
