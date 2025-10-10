@@ -26,10 +26,10 @@ class AvalynxForm {
             console.error("AvalynxForm: Element with id '" + id + "' not found");
             return;
         }
+        this.id = id;
         if (options === null || typeof options !== 'object') {
             options = {};
         }
-        this.id = id;
         this.options = {
             apiParams: {},
             loader: null,
