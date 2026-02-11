@@ -89,6 +89,9 @@ class AvalynxForm {
             this.handleResponse(result);
         } catch (error) {
             console.error('Error during AJAX request:', error);
+            if (this.options.onError) {
+                this.options.onError(error);
+            }
         } finally {
             if (this.options.loader === null) {
                 const overlay = document.getElementById(`${this.id}-overlay`);
