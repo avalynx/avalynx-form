@@ -16,6 +16,8 @@
  * @param {object} options.loader - An instance of AvalynxLoader to use as the loader for the modal (default: `null`).
  * @param {function} options.onSuccess - A callback function to be executed when the form submission is successful (default: `null`).
  * @param {function} options.onError - A callback function to be executed when the form submission fails (default: `null`).
+ * @param {function} options.onBeforeSubmit - A callback function to be executed before the form submission (default: `null`).
+ * @param {function} options.onAfterSubmit - A callback function to be executed after the form submission (default: `null`).
  *
  */
 
@@ -26,15 +28,17 @@ class AvalynxForm {
             console.error("AvalynxForm: Element with id '" + id + "' not found");
             return;
         }
-        this.id = id;
         if (options === null || typeof options !== 'object') {
             options = {};
         }
+        this.id = id;
         this.options = {
             apiParams: {},
             loader: null,
             onSuccess: null,
             onError: null,
+            onBeforeSubmit: null,
+            onAfterSubmit: null,
             ...options
         };
         this.init();
@@ -53,6 +57,12 @@ class AvalynxForm {
     }
 
     async sendAjaxRequest() {
+        if (this.options.onBeforeSubmit) {
+            const result = this.options.onBeforeSubmit(this.form);
+            if (result === false) {
+                return;
+            }
+        }
         const action = this.form.action;
         const method = this.form.method.toUpperCase();
 
@@ -87,6 +97,9 @@ class AvalynxForm {
                 }
             } else {
                 this.options.loader.load = false;
+            }
+            if (this.options.onAfterSubmit) {
+                this.options.onAfterSubmit(this.form);
             }
         }
     }

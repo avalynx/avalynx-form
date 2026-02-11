@@ -132,6 +132,8 @@ AvalynxForm allows the following options for customization:
   - `loader`: (object) An instance of AvalynxLoader to use as the loader for the modal (default: `null`).
   - `onSuccess`: (function) A callback function to be executed when the form submission is successful (default: `null`).
   - `onError`: (function) A callback function to be executed when the form submission fails (default: `null`).
+  - `onBeforeSubmit`: (function) A callback function to be executed before the form submission (default: `null`).
+  - `onAfterSubmit`: (function) A callback function to be executed after the form submission (default: `null`).
 
 ## Contributing
 
