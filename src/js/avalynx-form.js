@@ -3,12 +3,12 @@
  *
  * AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
  *
- * @version 1.0.2
+ * @version 1.0.3
  * @license MIT
- * @author https://github.com/avalynx/avalynx-datatable/graphs/contributors
+ * @author https://github.com/avalynx/avalynx-form/graphs/contributors
  * @website https://github.com/avalynx/
- * @repository https://github.com/avalynx/avalynx-datatable.git
- * @bugs https://github.com/avalynx/avalynx-datatable/issues
+ * @repository https://github.com/avalynx/avalynx-form.git
+ * @bugs https://github.com/avalynx/avalynx-form/issues
  *
  * @param {string} id - The ID of the element to attach the form to.
  * @param {object} options - An object containing the following keys:

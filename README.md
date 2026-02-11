@@ -42,7 +42,7 @@ Replace `path/to/avalynx-form.js` with the actual path to the file in your proje
 AvalynxForm is also available via [jsDelivr](https://www.jsdelivr.com/). You can include it in your project like this:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.2/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.3/dist/js/avalynx-form.js"></script>
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
@@ -108,7 +108,7 @@ Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxFo
 To use AvalynxForm in your project, include the AvalynxForm JavaScript file in your project and initialize the class with the appropriate selector.
 
 ```javascript
-new AvalynxForm("#myForm", {
+new AvalynxForm("myForm", {
     apiParams: {
         extraData1: 'value1',
         extraData2: 'value2'

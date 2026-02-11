@@ -2,7 +2,7 @@
   "name": "avalynx-form",
   "title": "AvalynxForm",
   "description": "AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "main": "dist/js/avalynx-form.js",
   "module": "dist/js/avalynx-form.esm.js",
