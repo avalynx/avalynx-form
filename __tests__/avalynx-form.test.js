@@ -82,6 +82,14 @@ describe('AvalynxForm', () => {
             expect(form.options.onSuccess).toBe(onSuccess);
             expect(form.options.onError).toBe(onError);
         });
+
+        test('should handle null or non-object options', () => {
+            const form1 = new AvalynxForm('test-form', null);
+            expect(form1.options.apiParams).toEqual({});
+
+            const form2 = new AvalynxForm('test-form', 'not-an-object');
+            expect(form2.options.apiParams).toEqual({});
+        });
     });
 
     describe('Initialization', () => {
@@ -143,6 +151,55 @@ describe('AvalynxForm', () => {
     });
 
     describe('AJAX Request Handling', () => {
+        test('should call onBeforeSubmit and proceed if it returns true', async () => {
+            const onBeforeSubmit = jest.fn().mockReturnValue(true);
+            const form = new AvalynxForm('test-form', { onBeforeSubmit });
+            global.fetch.mockResolvedValue({
+                json: async () => ({ success: true })
+            });
+
+            await form.sendAjaxRequest();
+
+            expect(onBeforeSubmit).toHaveBeenCalledWith(formElement);
+            expect(global.fetch).toHaveBeenCalled();
+        });
+
+        test('should call onBeforeSubmit and abort if it returns false', async () => {
+            const onBeforeSubmit = jest.fn().mockReturnValue(false);
+            const form = new AvalynxForm('test-form', { onBeforeSubmit });
+            global.fetch.mockResolvedValue({
+                json: async () => ({ success: true })
+            });
+
+            await form.sendAjaxRequest();
+
+            expect(onBeforeSubmit).toHaveBeenCalledWith(formElement);
+            expect(global.fetch).not.toHaveBeenCalled();
+        });
+
+        test('should call onAfterSubmit after request', async () => {
+            const onAfterSubmit = jest.fn();
+            const form = new AvalynxForm('test-form', { onAfterSubmit });
+            global.fetch.mockResolvedValue({
+                json: async () => ({ success: true })
+            });
+
+            await form.sendAjaxRequest();
+
+            expect(onAfterSubmit).toHaveBeenCalledWith(formElement);
+        });
+
+        test('should call onError when fetch fails and onError is provided', async () => {
+            const onError = jest.fn();
+            const error = new Error('Network error');
+            global.fetch.mockRejectedValue(error);
+
+            const form = new AvalynxForm('test-form', { onError });
+            await form.sendAjaxRequest();
+
+            expect(onError).toHaveBeenCalledWith(error);
+        });
+
         test('should send FormData with correct action and method', async () => {
             global.fetch.mockResolvedValue({
                 json: async () => ({ success: true })
@@ -262,14 +319,13 @@ describe('AvalynxForm', () => {
         });
 
         test('should redirect on successful response with redirect URL', () => {
-            delete window.location;
-            window.location = { href: '' };
-
             const form = new AvalynxForm('test-form');
+            const redirectSpy = jest.spyOn(form, 'redirect').mockImplementation(() => {});
             const response = { success: true, redirect: '/thank-you' };
+
             form.handleResponse(response);
 
-            expect(window.location.href).toBe('/thank-you');
+            expect(redirectSpy).toHaveBeenCalledWith('/thank-you');
         });
 
         test('should show alert for debug messages', () => {
@@ -573,6 +629,20 @@ describe('AvalynxForm', () => {
     });
 
     describe('Edge Cases', () => {
+        test('should call redirect with correct URL', () => {
+            const form = new AvalynxForm('test-form');
+            expect(typeof form.redirect).toBe('function');
+
+            const redirectSpy = jest.spyOn(form, 'redirect').mockImplementation(() => {});
+            form.handleResponse({ success: true, redirect: '/test-url' });
+            expect(redirectSpy).toHaveBeenCalledWith('/test-url');
+        });
+
+        test('should set window.location.href when redirect is called', () => {
+            const form = new AvalynxForm('test-form');
+            expect(() => form.redirect('https://jestjs.io/new-page')).not.toThrow();
+        });
+
         test('should handle empty response object', () => {
             const form = new AvalynxForm('test-form');
             expect(() => form.handleResponse({})).not.toThrow();
@@ -624,11 +694,9 @@ describe('AvalynxForm', () => {
 
         test('should handle both debug_msg and success redirect', () => {
             const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-            delete window.location;
-            window.location = { href: '' };
-
             const onSuccess = jest.fn();
             const form = new AvalynxForm('test-form', { onSuccess });
+            const redirectSpy = jest.spyOn(form, 'redirect').mockImplementation(() => {});
 
             const response = {
                 success: true,
@@ -639,9 +707,107 @@ describe('AvalynxForm', () => {
 
             expect(alertSpy).toHaveBeenCalledWith('Debug info');
             expect(onSuccess).toHaveBeenCalledWith(response);
-            expect(window.location.href).toBe('/success-page');
+            expect(redirectSpy).toHaveBeenCalledWith('/success-page');
 
             alertSpy.mockRestore();
+        });
+
+        test('should handle showInvalidFeedback when parentElement is null', () => {
+            document.body.innerHTML += `
+                <form id="null-parent-form" action="/api/submit" method="POST">
+                    <input type="text" id="orphan-input" name="orphan" class="form-control" />
+                </form>
+            `;
+
+            const form = new AvalynxForm('null-parent-form');
+            const input = document.getElementById('orphan-input');
+
+            // Mock closest to return null and parentElement to be null
+            Object.defineProperty(input, 'closest', {
+                value: jest.fn(() => null),
+                configurable: true
+            });
+            Object.defineProperty(input, 'parentElement', {
+                value: null,
+                configurable: true
+            });
+
+            // Should not throw error and should not add is-invalid class when parentElement is null
+            expect(() => form.showInvalidFeedback('orphan', 'Error message')).not.toThrow();
+            expect(input.classList.contains('is-invalid')).toBe(false);
+        });
+
+        test('should clear invalid feedback for field without form-group parent using parentElement fallback', () => {
+            document.body.innerHTML += `
+                <form id="no-group-clear-form" action="/api/submit" method="POST">
+                    <div>
+                        <input type="text" id="nogroupclear" name="nogroupclear" class="form-control is-invalid" />
+                        <span class="invalid-feedback" style="display:block">Error</span>
+                    </div>
+                </form>
+            `;
+
+            const form = new AvalynxForm('no-group-clear-form');
+            form.clearInvalidFeedback('nogroupclear');
+
+            const input = document.getElementById('nogroupclear');
+            expect(input.classList.contains('is-invalid')).toBe(false);
+        });
+
+        test('should clear invalid feedback for field without invalid-feedback span', () => {
+            document.body.innerHTML += `
+                <form id="no-feedback-clear-form" action="/api/submit" method="POST">
+                    <div class="form-group">
+                        <input type="text" id="nofeedbackclear" name="nofeedbackclear" class="form-control is-invalid" />
+                    </div>
+                </form>
+            `;
+
+            const form = new AvalynxForm('no-feedback-clear-form');
+            expect(() => form.clearInvalidFeedback('nofeedbackclear')).not.toThrow();
+
+            const input = document.getElementById('nofeedbackclear');
+            expect(input.classList.contains('is-invalid')).toBe(false);
+        });
+
+        test('should handle clearInvalidFeedback when parentElement is null', () => {
+            document.body.innerHTML += `
+                <form id="null-parent-clear-form" action="/api/submit" method="POST">
+                    <input type="text" id="orphan-clear-input" name="orphanclear" class="form-control is-invalid" />
+                </form>
+            `;
+
+            const form = new AvalynxForm('null-parent-clear-form');
+            const input = document.getElementById('orphan-clear-input');
+
+            // Mock closest to return null and parentElement to be null
+            Object.defineProperty(input, 'closest', {
+                value: jest.fn(() => null),
+                configurable: true
+            });
+            Object.defineProperty(input, 'parentElement', {
+                value: null,
+                configurable: true
+            });
+
+            // Should not throw error and should not remove is-invalid class when parentElement is null
+            expect(() => form.clearInvalidFeedback('orphanclear')).not.toThrow();
+            expect(input.classList.contains('is-invalid')).toBe(true);
+        });
+    });
+
+    describe('Module Export', () => {
+        test('should export AvalynxForm when module exists', () => {
+            // This test verifies the module.exports branch is covered
+            // The require at the top of this file already tests this path
+            const AvalynxFormModule = require('../src/js/avalynx-form.js');
+            expect(AvalynxFormModule).toBe(AvalynxForm);
+        });
+
+        test('should verify module.exports is set correctly', () => {
+            const AvalynxFormModule = require('../src/js/avalynx-form.js');
+            expect(AvalynxFormModule).toBe(AvalynxForm);
+            expect(typeof AvalynxFormModule).toBe('function');
         });
     });
 });

@@ -3,7 +3,7 @@
  *
  * AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
  *
- * @version 1.0.3
+ * @version 1.0.4
  * @license MIT
  * @author https://github.com/avalynx/avalynx-form/graphs/contributors
  * @website https://github.com/avalynx/
@@ -117,7 +117,7 @@ class AvalynxForm {
             }
 
             if (response.redirect !== undefined) {
-                window.location.href = response.redirect;
+                this.redirect(response.redirect);
             }
         } else {
             if (response.invalid !== undefined) {
@@ -193,8 +193,13 @@ class AvalynxForm {
             this.form.appendChild(overlay);
         }
     }
+
+    redirect(url) {
+        window.location.href = url;
+    }
 }
 
+/* istanbul ignore next */
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = AvalynxForm;
 }

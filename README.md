@@ -1,5 +1,13 @@
 # AvalynxForm
 
+[![npm version](https://img.shields.io/npm/v/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
+[![npm downloads](https://img.shields.io/npm/dt/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
+[![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/avalynx-form)](https://www.jsdelivr.com/package/npm/avalynx-form)
+[![License](https://img.shields.io/npm/l/avalynx-form)](LICENSE)
+[![Tests](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/avalynx/avalynx-form/branch/main/graph/badge.svg)](https://codecov.io/gh/avalynx/avalynx-form)
+[![GitHub stars](https://img.shields.io/github/stars/avalynx/avalynx-form?style=flat&logo=github)](https://github.com/avalynx/avalynx-form)
+
 AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
 
 ## Features
@@ -42,7 +50,7 @@ Replace `path/to/avalynx-form.js` with the actual path to the file in your proje
 AvalynxForm is also available via [jsDelivr](https://www.jsdelivr.com/). You can include it in your project like this:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.3/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.4/dist/js/avalynx-form.js"></script>
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
