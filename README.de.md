@@ -23,7 +23,8 @@ Hier ist ein einfaches Beispiel für die Verwendung von AvalynxForm in Ihrem Pro
 * [Übersicht](https://avalynx-form.jbs-newmedia.de/examples/index.html)
 * [Formular](https://avalynx-form.jbs-newmedia.de/examples/form.html)
 * [Formular mit langsamer Antwort](https://avalynx-form.jbs-newmedia.de/examples/form-slow-response.html)
-* [Formular mit AvalynxSelect](https://avalynx-form.jbs-newmedia.de/examples/form-with-avalynx-select.html)
+* [Formular mit AvalynxSelect](https://avalynx-form.jbs-newmedia.de/examples/form-avalynx-select.html)
+* [Formular mit AvalynxAutocomplete](https://avalynx-form.jbs-newmedia.de/examples/form-avalynx-autocomplete.html)
 
 ## Installation
 

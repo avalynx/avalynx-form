@@ -23,7 +23,8 @@ Here's a simple example of how to use AvalynxForm in your project:
 * [Overview](https://avalynx-form.jbs-newmedia.de/examples/index.html)
 * [Form](https://avalynx-form.jbs-newmedia.de/examples/form.html)
 * [Form with slow response](https://avalynx-form.jbs-newmedia.de/examples/form-slow-response.html)
-* [Form with AvalynxSelect](https://avalynx-form.jbs-newmedia.de/examples/form-with-avalynx-select.html)
+* [Form with AvalynxSelect](https://avalynx-form.jbs-newmedia.de/examples/form-avalynx-select.html)
+* [Form with AvalynxAutocomplete](https://avalynx-form.jbs-newmedia.de/examples/form-avalynx-autocomplete.html)
 
 ## Installation
 
