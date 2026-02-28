@@ -3,7 +3,7 @@
  *
  * AvalynxAutocomplete is a lightweight, customizable autocomplete component for web applications. It is designed to be used with Bootstrap version 5.3 or higher and does not require any framework dependencies.
  *
- * @version 1.0.1
+ * @version 1.0.2
  * @license MIT
  * @author https://github.com/avalynx/avalynx-autocomplete/graphs/contributors
  * @website https://github.com/avalynx/
@@ -94,4 +94,16 @@
 }
 .avalynx-autocomplete-container-with-icon {
     padding-right: 35px !important;
+}
+
+.avalynx-autocomplete-wrapper .input-group > .form-control:not(:last-child):not(.dropdown-toggle),
+.avalynx-autocomplete-wrapper .input-group > .form-select:not(:last-child):not(.dropdown-toggle),
+.avalynx-autocomplete-wrapper .input-group > .form-floating:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: var(--bs-border-radius) !important;
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+}
+
+.avalynx-autocomplete-wrapper .input-group > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: var(--bs-border-radius) !important;
+    border-bottom-right-radius: var(--bs-border-radius) !important;
 }

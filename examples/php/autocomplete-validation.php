@@ -20,6 +20,16 @@ if (empty($autocomplete_key)) {
     $json['invalid']['customer_autocomplete'] = 'Please select a product.';
 }
 
+$customer_firstname = isset($_POST['customer_firstname']) ? $_POST['customer_firstname'] : '';
+if (strlen($customer_firstname) < 2) {
+    $json['invalid']['customer_firstname'] = 'First name must be at least 2 characters long.';
+}
+
+$customer_lastname = isset($_POST['customer_lastname']) ? $_POST['customer_lastname'] : '';
+if (strlen($customer_lastname) < 2) {
+    $json['invalid']['customer_lastname'] = 'Last name must be at least 2 characters long.';
+}
+
 if ($tags_count < 2) {
     $json['invalid']['customer_tags'] = 'Please select at least 2 tags.';
 }
@@ -32,6 +42,9 @@ if ((!isset($json['invalid'])) || ($json['invalid'] === [])) {
     foreach ($json['invalid'] as $key => $value) {
         if (isset($json['valid'][$key])) {
             unset($json['valid'][$key]);
+        }
+        if (isset($json['valid'][$key . '_key'])) {
+            unset($json['valid'][$key . '_key']);
         }
     }
 }
