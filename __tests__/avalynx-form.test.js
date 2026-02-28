@@ -490,6 +490,53 @@ describe('AvalynxForm', () => {
             expect(input2.classList.contains('is-invalid')).toBe(true);
         });
 
+        test('should show invalid feedback for field in a custom input container', () => {
+            document.body.innerHTML += `
+                <form id="container-form" action="/api/submit" method="POST">
+                    <div class="form-group">
+                        <div class="avalynx-autocomplete-input-container">
+                            <input type="text" id="autocomplete" name="autocomplete" class="form-control" />
+                        </div>
+                        <span class="invalid-feedback"></span>
+                    </div>
+                </form>
+            `;
+
+            const form = new AvalynxForm('container-form');
+            const autocompleteInput = document.getElementById('autocomplete');
+            const containerElement = autocompleteInput.closest('.avalynx-autocomplete-input-container');
+
+            form.showInvalidFeedback('autocomplete', 'Selection is required');
+
+            expect(autocompleteInput.classList.contains('is-invalid')).toBe(true);
+            expect(containerElement.classList.contains('is-invalid')).toBe(true);
+        });
+
+        test('should clear invalid feedback for field in a custom input container', () => {
+            document.body.innerHTML += `
+                <form id="container-clear-form" action="/api/submit" method="POST">
+                    <div class="form-group">
+                        <div class="avalynx-test-input-container">
+                            <input type="text" id="testinput" name="testinput" class="form-control" />
+                        </div>
+                        <span class="invalid-feedback"></span>
+                    </div>
+                </form>
+            `;
+
+            const form = new AvalynxForm('container-clear-form');
+            const testInput = document.getElementById('testinput');
+            const containerElement = testInput.closest('.avalynx-test-input-container');
+
+            // Add invalid feedback first
+            form.showInvalidFeedback('testinput', 'Error');
+            expect(containerElement.classList.contains('is-invalid')).toBe(true);
+
+            // Then clear it
+            form.clearInvalidFeedback('testinput');
+            expect(containerElement.classList.contains('is-invalid')).toBe(false);
+        });
+
         test('should handle fields without form-group parent', () => {
             document.body.innerHTML += `
                 <form id="no-group-form" action="/api/submit" method="POST">

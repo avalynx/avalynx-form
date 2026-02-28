@@ -50,7 +50,7 @@ Ersetzen Sie `pfad/zu/avalynx-form.js` durch den tatsächlichen Pfad zur Datei i
 AvalynxForm ist auch über [jsDelivr](https://www.jsdelivr.com/) verfügbar. Sie können es wie folgt in Ihr Projekt einbinden:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.4/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.5/dist/js/avalynx-form.js"></script>
 ```
 
 Stellen Sie sicher, dass Sie auch die JS/CSS-Dateien von Bootstrap in Ihr Projekt einbinden, um eine korrekte Anzeige von AvalynxForm zu gewährleisten.
