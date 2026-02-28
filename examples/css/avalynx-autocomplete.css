@@ -1,0 +1,97 @@
+/**
+ * AvalynxAutocomplete
+ *
+ * AvalynxAutocomplete is a lightweight, customizable autocomplete component for web applications. It is designed to be used with Bootstrap version 5.3 or higher and does not require any framework dependencies.
+ *
+ * @version 1.0.1
+ * @license MIT
+ * @author https://github.com/avalynx/avalynx-autocomplete/graphs/contributors
+ * @website https://github.com/avalynx/
+ * @repository https://github.com/avalynx/avalynx-autocomplete.git
+ * @bugs https://github.com/avalynx/avalynx-autocomplete/issues
+ */
+
+.avalynx-autocomplete-wrapper {
+    width: 100%;
+}
+.avalynx-autocomplete-dropdown {
+    top: 100%;
+    left: 0;
+    margin-top: 2px;
+    border-radius: var(--bs-border-radius);
+}
+.avalynx-autocomplete-item {
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+.avalynx-autocomplete-item:hover,
+.avalynx-autocomplete-item.active {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+}
+.avalynx-autocomplete-tags .badge {
+    font-size: var(--bs-badge-font-size);
+    padding: 0.5em 0.75em;
+}
+.avalynx-autocomplete-input-container {
+    min-height: 38px;
+}
+.avalynx-autocomplete-input-container:focus-within {
+    border-color: var(--bs-primary-border-subtle);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+.avalynx-autocomplete-input-container.is-invalid {
+    border-color: var(--bs-form-invalid-border-color);
+    padding-right: calc(1.5em + 0.75rem + 25px);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+.avalynx-autocomplete-input-container.is-invalid:focus-within {
+    border-color: var(--bs-form-invalid-border-color);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+}
+.avalynx-autocomplete-inline-input {
+    min-width: 80px;
+    border: none !important;
+    padding: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+.avalynx-autocomplete-inline-input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.avalynx-autocomplete-clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--bs-secondary-color);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: color 0.15s, background-color 0.15s;
+    z-index: 10;
+}
+.is-invalid + .avalynx-autocomplete-clear-icon,
+.is-invalid ~ .avalynx-autocomplete-clear-icon {
+    right: 35px;
+}
+.avalynx-autocomplete-clear-icon:hover {
+    color: var(--bs-danger);
+    background-color: rgba(var(--bs-danger-rgb), 0.1);
+}
+.avalynx-autocomplete-input-with-icon {
+    padding-right: 35px !important;
+}
+.avalynx-autocomplete-input-with-icon.is-invalid {
+    padding-right: calc(1.5em + 0.75rem + 25px) !important;
+}
+.avalynx-autocomplete-container-with-icon {
+    padding-right: 35px !important;
+}
