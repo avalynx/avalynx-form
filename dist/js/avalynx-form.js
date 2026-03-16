@@ -139,7 +139,8 @@ class AvalynxForm {
     }
 
     showInvalidFeedback(key, value) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
+        const escapedKey = CSS.escape(key);
+        const elements = document.querySelectorAll(`#${escapedKey}, [name="${escapedKey}"], [name="${escapedKey}[]"], [name^="${escapedKey}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -158,7 +159,8 @@ class AvalynxForm {
     }
 
     clearInvalidFeedback(key) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
+        const escapedKey = CSS.escape(key);
+        const elements = document.querySelectorAll(`#${escapedKey}, [name="${escapedKey}"], [name="${escapedKey}[]"], [name^="${escapedKey}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
