@@ -11,6 +11,25 @@ global.bootstrap = {
     }))
 };
 
+// Mock CSS.escape if it doesn't exist (jsdom < 16.5.0)
+if (!global.CSS) {
+    global.CSS = {
+        escape: (str) => {
+            if (arguments.length === 0) {
+                throw new TypeError("Failed to execute 'escape' on 'CSS': 1 argument required, but only 0 present.");
+            }
+            return str.replace(/([!"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+        }
+    };
+} else if (!global.CSS.escape) {
+    global.CSS.escape = (str) => {
+        if (arguments.length === 0) {
+            throw new TypeError("Failed to execute 'escape' on 'CSS': 1 argument required, but only 0 present.");
+        }
+        return str.replace(/([!"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+    };
+}
+
 const AvalynxForm = require('../src/js/avalynx-form.js');
 
 describe('AvalynxForm', () => {
