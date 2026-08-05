@@ -1,12 +1,12 @@
 # AvalynxForm
 
-[![npm version](https://img.shields.io/npm/v/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
-[![npm downloads](https://img.shields.io/npm/dt/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
-[![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/avalynx-form)](https://www.jsdelivr.com/package/npm/avalynx-form)
-[![License](https://img.shields.io/npm/l/avalynx-form)](LICENSE)
-[![Tests](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/gh/avalynx/avalynx-form/branch/main/graph/badge.svg)](https://codecov.io/gh/avalynx/avalynx-form)
-[![GitHub stars](https://img.shields.io/github/stars/avalynx/avalynx-form?style=flat&logo=github)](https://github.com/avalynx/avalynx-form)
+[![npm version](https://jbs-newmedia.de/badge/npm/avalynx-form/version.svg)](https://www.npmjs.com/package/avalynx-form)
+[![npm downloads](https://jbs-newmedia.de/badge/npm/avalynx-form/download.svg)](https://www.npmjs.com/package/avalynx-form)
+[![jsDelivr](https://jbs-newmedia.de/badge/jsdelivr/avalynx-form/hits.svg)](https://www.jsdelivr.com/package/npm/avalynx-form)
+[![License](https://jbs-newmedia.de/badge/npm/avalynx-form/license.svg)](LICENSE)
+[![Tests](https://jbs-newmedia.de/badge/github/avalynx/avalynx-form/tests.svg)](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml)
+[![codecov](https://jbs-newmedia.de/badge/codecov/avalynx/avalynx-form/coverage.svg)](https://codecov.io/gh/avalynx/avalynx-form)
+[![GitHub stars](https://jbs-newmedia.de/badge/github/avalynx/avalynx-form/stars.svg)](https://github.com/avalynx/avalynx-form)
 
 AvalynxForm ist eine leichtgewichtige, anpassbare Formular-Handling-Bibliothek für Webanwendungen. Basierend auf Bootstrap >=5.3 ohne jegliche Framework-Abhängigkeiten.
 
@@ -16,7 +16,7 @@ AvalynxForm ist eine leichtgewichtige, anpassbare Formular-Handling-Bibliothek f
 - **Bootstrap-Integration**: Entwickelt für die nahtlose Integration mit Bootstrap >= 5.3.
 - **Einfach zu bedienen**: Einfache API zur Erstellung und Verwaltung von Formularen in Ihren Webanwendungen.
 
-## Beispiel
+## Beispiele
 
 Hier ist ein einfaches Beispiel für die Verwendung von AvalynxForm in Ihrem Projekt:
 
@@ -51,7 +51,7 @@ Ersetzen Sie `pfad/zu/avalynx-form.js` durch den tatsächlichen Pfad zur Datei i
 AvalynxForm ist auch über [jsDelivr](https://www.jsdelivr.com/) verfügbar. Sie können es wie folgt in Ihr Projekt einbinden:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.5/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.6/dist/js/avalynx-form.js"></script>
 ```
 
 Stellen Sie sicher, dass Sie auch die JS/CSS-Dateien von Bootstrap in Ihr Projekt einbinden, um eine korrekte Anzeige von AvalynxForm zu gewährleisten.
@@ -144,9 +144,9 @@ AvalynxForm ermöglicht die folgenden Optionen zur Anpassung:
   - `onBeforeSubmit`: (function) Eine Callback-Funktion, die vor der Formularübermittlung ausgeführt wird (Standard: `null`).
   - `onAfterSubmit`: (function) Eine Callback-Funktion, die nach der Formularübermittlung ausgeführt wird (Standard: `null`).
 
-## Mitwirken
+## Beitragen
 
-Beiträge sind willkommen! Wenn Sie einen Beitrag leisten möchten, erstellen Sie bitte einen Fork des Repositorys und senden Sie einen Pull-Request mit Ihren Änderungen oder Verbesserungen. Wir suchen nach Beiträgen in den folgenden Bereichen:
+Beiträge sind willkommen! Wenn Sie etwas beitragen möchten, forken Sie bitte das Repository und senden Sie einen Pull-Request mit Ihren Änderungen oder Verbesserungen. Wir suchen Beiträge in den folgenden Bereichen:
 
 - Fehlerbehebungen
 - Funktionserweiterungen
@@ -160,6 +160,6 @@ AvalynxForm ist quelloffene Software, die unter der [MIT-Lizenz](LICENSE) lizenz
 
 ## Kontakt
 
-Wenn Sie Fragen, Funktionswünsche oder Probleme haben, eröffnen Sie bitte ein Issue in unserem [GitHub-Repository](https://github.com/avalynx/avalynx-form/issues) oder senden Sie einen Pull-Request.
+Wenn Sie Fragen, Funktionswünsche oder Probleme haben, eröffnen Sie bitte ein Issue in unserem [GitHub-Repository](https://github.com/avalynx/avalynx-form/issues) oder reichen Sie einen Pull-Request ein.
 
 Vielen Dank, dass Sie AvalynxForm für Ihr Projekt in Betracht ziehen!

@@ -3,36 +3,42 @@
  *
  * AvalynxAutocomplete is a lightweight, customizable autocomplete component for web applications. It is designed to be used with Bootstrap version 5.3 or higher and does not require any framework dependencies.
  *
- * @version 1.0.2
+ * @version 1.0.5
  * @license MIT
  * @author https://github.com/avalynx/avalynx-autocomplete/graphs/contributors
  * @website https://github.com/avalynx/
  * @repository https://github.com/avalynx/avalynx-autocomplete.git
  * @bugs https://github.com/avalynx/avalynx-autocomplete/issues
  *
- * @param {string} id - The ID of the element to attach the table to.
+ * @param {string} selector - The selector for the input elements (default: '.avalynx-autocomplete').
  * @param {object} options - An object containing the following keys:
- * @param {string} options.apiUrl - The URL to fetch the data from (default: null).
- * @param {string} options.apiMethod - The HTTP method to use when fetching data from the API (default: 'POST').
- * @param {object} options.apiParams - Additional parameters to send with the API request (default: {}).
- * @param {object} options.sorting - The initial sorting configuration for the table. Format is an array of objects specifying column and direction, e.g., [{"column": "name", "dir": "asc"}] (default: []).
- * @param {number} options.currentPage - The initial page number to display (default: 1).
- * @param {string} options.search - The initial search string to filter the table data (default: '').
- * @param {number} options.searchWait - The debounce time in milliseconds for search input to wait after the last keystroke before performing the search (default: 800).
- * @param {array} options.listPerPage - The list of options for the per-page dropdown (default: [10, 25, 50, 100]).
- * @param {number} options.perPage - The initial number of items per page (default: 10).
- * @param {string} options.className - The CSS classes to apply to the table (default: 'table table-striped table-bordered table-responsive').
- * @param {boolean} options.paginationPrevNext - Whether to show the previous and next buttons in the pagination (default: true).
- * @param {number} options.paginationRange - The number of pages to show on either side of the current page in the pagination (default: 2).
- * @param {object} options.loader - An instance of AvalynxLoader to use as the loader for the table (default: null).
+ * @param {string} options.className - Additional CSS classes for the dropdown (default: '').
+ * @param {number} options.maxItems - Maximum number of results displayed in the dropdown (default: 5).
+ * @param {number} options.maxSelections - Maximum number of selectable items. If > 1, multi-select mode is activated (default: 1).
+ * @param {number} options.minLength - Minimum number of characters to start the search (default: 1).
+ * @param {number} options.debounce - Delay in milliseconds after the last keystroke (default: 300).
+ * @param {boolean} options.caseSensitive - Case-sensitive search (default: false).
+ * @param {boolean} options.disabled - Initialize in a disabled state (default: false).
+ * @param {string|null} options.defaultValue - Default value (label) upon initialization (default: null).
+ * @param {string|null} options.defaultKey - Default key upon initialization (default: null).
+ * @param {array|null} options.defaultSelections - Array of objects {key, value} for multi-select default values (default: null).
+ * @param {string} options.tagsPosition - Position of tags in multi-select ('above' | 'inline') (default: 'above').
+ * @param {string} options.clearStyle - Style of the clear button ('button' | 'icon') (default: 'button').
+ * @param {array|null} options.data - Static array of data objects {key, value} (default: null).
+ * @param {function} options.fetchData - Asynchronous function for fetching data (default: null).
+ * @param {boolean} options.allowCreate - Allows creating new entries from the current input value (default: false).
+ * @param {string} options.createShortcut - Keyboard shortcut used to create a new entry (default: 'Enter').
+ * @param {function} options.createItem - Maps the typed text to a {key, value} object when a new entry is created (default: null).
+ * @param {function} options.onChange - Callback on selection change (default: null).
+ * @param {function} options.onClear - Callback when the field is cleared (default: null).
+ * @param {function} options.onLoaded - Callback after component initialization (default: null).
+ *
  * @param {object} language - An object containing the following keys:
- * @param {string} language.showLabel - The label for the per-page select (default: 'Show').
- * @param {string} language.entriesLabel - The label next to the per-page select indicating what the numbers represent (default: 'entries').
- * @param {string} language.searchLabel - The label for the search input (default: 'Search').
- * @param {string} language.previousLabel - The label for the pagination's previous button (default: 'Previous').
- * @param {string} language.nextLabel - The label for the pagination's next button (default: 'Next').
- * @param {function} language.showingEntries - A function to format the text showing the range of visible entries out of the total (default: (start, end, total) => 'Showing ${start} to ${end} of ${total} entries').
- * @param {function} language.showingFilteredEntries - A function to format the text showing the range of visible entries out of the total when filtered (default: (start, end, filtered, total) => 'Showing ${start} to ${end} of ${filtered} entries (filtered from ${total} entries)').
+ * @param {string} language.placeholder - Placeholder text for the input field (default: 'Search...').
+ * @param {string} language.noResults - Text when no results are found (default: 'No results found').
+ * @param {function} language.createOption - Formatter for the create action label (value, shortcut) => string (default: Create "{value}" ({shortcut})).
+ * @param {string} language.clearTitle - Title attribute for the clear button (default: 'Clear selection').
+ * @param {string} language.removeTitle - Title attribute for removing a tag (default: 'Remove').
  *
  */
 
@@ -58,10 +64,13 @@ class AvalynxAutocomplete {
             defaultValue: null,
             defaultKey: null,
             defaultSelections: null,
-            tagsPosition: 'above',   // 'above' | 'inline'
-            clearStyle: 'button',    // 'button' | 'icon'
+            tagsPosition: 'above',
+            clearStyle: 'button',
             data: null,
             fetchData: null,
+            allowCreate: false,
+            createShortcut: 'Enter',
+            createItem: null,
             onChange: null,
             onClear: null,
             onLoaded: null,
@@ -71,11 +80,13 @@ class AvalynxAutocomplete {
         this.language = {
             placeholder: 'Search...',
             noResults: 'No results found',
+            createOption: (value, shortcut) => `Create "${value}"${shortcut ? ` (${shortcut})` : ''}`,
             clearTitle: 'Clear selection',
             removeTitle: 'Remove',
             ...language
         };
 
+        this.createShortcut = this.normalizeCreateShortcut(this.options.createShortcut);
         this.instances = [];
         this.initialized = false;
         this.elements.forEach(input => this.init(input));
@@ -96,7 +107,8 @@ class AvalynxAutocomplete {
             inputWrapper: null,
             debounceTimer: null,
             isSelected: false,
-            selections: []
+            selections: [],
+            createdItems: []
         };
         this.createElements(instance);
         this.bindEvents(instance);
@@ -115,7 +127,6 @@ class AvalynxAutocomplete {
         wrapper.classList.add('avalynx-autocomplete-wrapper', 'position-relative');
         input.parentNode.insertBefore(wrapper, input);
 
-        // Tags oberhalb (nur bei Multi + above)
         if (isMulti && !isInline) {
             const tagsContainer = document.createElement('div');
             tagsContainer.classList.add('avalynx-autocomplete-tags', 'd-flex', 'flex-wrap', 'gap-1', 'mb-2');
@@ -127,7 +138,6 @@ class AvalynxAutocomplete {
         inputGroup.classList.add(isIconStyle ? 'position-relative' : 'input-group');
         wrapper.appendChild(inputGroup);
 
-        // Inline-Modus: Input-Container mit Tags
         if (isMulti && isInline) {
             const inputContainer = document.createElement('div');
             inputContainer.classList.add(
@@ -145,7 +155,6 @@ class AvalynxAutocomplete {
             inputContainer.appendChild(tagsContainer);
             instance.tagsContainer = tagsContainer;
 
-            // Input stylen für inline
             input.classList.add('avalynx-autocomplete-inline-input', 'flex-grow-1');
             inputContainer.appendChild(input);
 
@@ -168,14 +177,12 @@ class AvalynxAutocomplete {
         input.setAttribute('autocomplete', 'off');
         input.placeholder = input.placeholder || this.language.placeholder;
 
-        // Hidden Input
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = input.dataset.keyName || (input.name ? input.name + '_key' : 'avalynx_autocomplete_key');
         inputGroup.appendChild(hiddenInput);
         instance.hiddenInput = hiddenInput;
 
-        // Clear Element (Button oder Icon)
         if (isIconStyle) {
             const clearIcon = document.createElement('span');
             clearIcon.classList.add('avalynx-autocomplete-clear-icon', 'd-none');
@@ -193,7 +200,6 @@ class AvalynxAutocomplete {
             instance.clearBtn = clearBtn;
         }
 
-        // Dropdown
         const dropdown = document.createElement('ul');
         dropdown.classList.add('avalynx-autocomplete-dropdown', 'list-group', 'position-absolute', 'w-100', 'd-none', 'shadow-sm');
         dropdown.style.zIndex = '1050';
@@ -224,10 +230,15 @@ class AvalynxAutocomplete {
             const item = e.target.closest('.avalynx-autocomplete-item');
             if (item && item.dataset.key) {
                 this.selectItem(instance, item.dataset.key, item.dataset.value);
+                return;
+            }
+
+            const createItem = e.target.closest('.avalynx-autocomplete-create-item');
+            if (createItem) {
+                this.createSelectionFromInput(instance);
             }
         });
 
-        // Clear Event - Button oder Icon
         const clearElement = clearBtn || clearIcon;
         if (clearElement) {
             clearElement.addEventListener('click', () => this.clearSelection(instance));
@@ -247,11 +258,12 @@ class AvalynxAutocomplete {
             return;
         }
         const results = await this.search(query, instance);
-        this.renderDropdown(instance, results);
+        this.renderDropdown(instance, results, query);
     }
 
     async search(query, instance) {
         let results = [];
+        const createdItems = this.filterMatchingItems(instance.createdItems, query);
 
         if (this.options.fetchData) {
             try {
@@ -261,12 +273,10 @@ class AvalynxAutocomplete {
                 return [];
             }
         } else if (this.options.data && Array.isArray(this.options.data)) {
-            const searchTerm = this.options.caseSensitive ? query : query.toLowerCase();
-            results = this.options.data.filter(item => {
-                const value = this.options.caseSensitive ? item.value : item.value.toLowerCase();
-                return value.includes(searchTerm);
-            });
+            results = this.filterMatchingItems(this.options.data, query);
         }
+
+        results = this.mergeUniqueItems([...createdItems, ...results]);
 
         if (this.options.maxSelections > 1) {
             const selectedKeys = instance.selections.map(s => s.key);
@@ -276,9 +286,47 @@ class AvalynxAutocomplete {
         return results.slice(0, this.options.maxItems);
     }
 
-    renderDropdown(instance, results) {
+    formatCreateShortcutLabel() {
+        if (!this.createShortcut) return '';
+
+        const parts = [];
+        if (this.createShortcut.modKey) {
+            parts.push('Ctrl/Cmd');
+        } else {
+            if (this.createShortcut.ctrlKey) parts.push('Ctrl');
+            if (this.createShortcut.metaKey) parts.push('Cmd');
+        }
+        if (this.createShortcut.altKey) parts.push('Alt');
+        if (this.createShortcut.shiftKey) parts.push('Shift');
+        parts.push(this.createShortcut.key.length === 1
+            ? this.createShortcut.key.toUpperCase()
+            : this.createShortcut.key.charAt(0).toUpperCase() + this.createShortcut.key.slice(1));
+
+        return parts.join('+');
+    }
+
+    shouldShowCreateOption(instance, query, results) {
+        if (!this.options.allowCreate || query.trim() === '') return false;
+
+        const existingItem = this.getExistingItemByValue(instance, query);
+        if (existingItem) {
+            if (this.options.maxSelections > 1) {
+                return !instance.selections.some(selection => selection.key === existingItem.key);
+            }
+            return false;
+        }
+
+        return !results.some(item => {
+            const itemValue = this.options.caseSensitive ? item.value : item.value.toLowerCase();
+            const queryValue = this.options.caseSensitive ? query : query.toLowerCase();
+            return itemValue === queryValue;
+        });
+    }
+
+    renderDropdown(instance, results, query = '') {
         const { dropdown } = instance;
         dropdown.innerHTML = '';
+        const showCreateOption = this.shouldShowCreateOption(instance, query, results);
 
         if (results.length === 0) {
             const noResults = document.createElement('li');
@@ -297,6 +345,20 @@ class AvalynxAutocomplete {
                 dropdown.appendChild(li);
             });
         }
+
+        if (showCreateOption) {
+            const createOption = document.createElement('li');
+            createOption.classList.add(
+                'list-group-item',
+                'list-group-item-action',
+                'avalynx-autocomplete-create-item',
+                'text-primary'
+            );
+            createOption.setAttribute('role', 'button');
+            createOption.textContent = this.language.createOption(query, this.formatCreateShortcutLabel());
+            dropdown.appendChild(createOption);
+        }
+
         dropdown.classList.remove('d-none');
     }
 
@@ -445,11 +507,166 @@ class AvalynxAutocomplete {
         if (this.initialized && this.options.onClear) this.options.onClear();
     }
 
+    normalizeCreateShortcut(shortcut) {
+        if (typeof shortcut !== 'string' || shortcut.trim() === '') {
+            console.error('AvalynxAutocomplete: createShortcut must be a non-empty string');
+            return null;
+        }
+
+        const parts = shortcut.split('+').map(part => part.trim().toLowerCase()).filter(Boolean);
+        const key = parts.pop();
+
+        if (!key) {
+            console.error('AvalynxAutocomplete: createShortcut must include a key');
+            return null;
+        }
+
+        const normalized = {
+            key,
+            modKey: false,
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            metaKey: false
+        };
+
+        for (const modifier of parts) {
+            switch (modifier) {
+                case 'ctrl':
+                case 'control':
+                    normalized.ctrlKey = true;
+                    break;
+                case 'mod':
+                    normalized.modKey = true;
+                    break;
+                case 'alt':
+                    normalized.altKey = true;
+                    break;
+                case 'shift':
+                    normalized.shiftKey = true;
+                    break;
+                case 'meta':
+                case 'cmd':
+                case 'command':
+                    normalized.metaKey = true;
+                    break;
+                default:
+                    console.error(`AvalynxAutocomplete: Unsupported createShortcut modifier '${modifier}'`);
+                    return null;
+            }
+        }
+
+        return normalized;
+    }
+
+    matchesCreateShortcut(e) {
+        if (!this.options.allowCreate || !this.createShortcut) return false;
+
+        const ctrlKey = !!e.ctrlKey;
+        const metaKey = !!e.metaKey;
+        const primaryModifierMatches = this.createShortcut.modKey
+            ? (ctrlKey || metaKey)
+            : ctrlKey === this.createShortcut.ctrlKey && metaKey === this.createShortcut.metaKey;
+
+        return e.key.toLowerCase() === this.createShortcut.key &&
+            primaryModifierMatches &&
+            !!e.altKey === this.createShortcut.altKey &&
+            !!e.shiftKey === this.createShortcut.shiftKey &&
+            (!this.createShortcut.modKey || (!this.createShortcut.ctrlKey && !this.createShortcut.metaKey));
+    }
+
+    filterMatchingItems(items, query) {
+        if (!Array.isArray(items)) return [];
+
+        const searchTerm = this.options.caseSensitive ? query : query.toLowerCase();
+        return items.filter(item => {
+            if (!item || typeof item.value !== 'string') return false;
+            const value = this.options.caseSensitive ? item.value : item.value.toLowerCase();
+            return value.includes(searchTerm);
+        });
+    }
+
+    mergeUniqueItems(items) {
+        const seenKeys = new Set();
+
+        return items.filter(item => {
+            if (!item || item.key == null || item.value == null) return false;
+            if (seenKeys.has(item.key)) return false;
+            seenKeys.add(item.key);
+            return true;
+        });
+    }
+
+    getExistingItemByValue(instance, value) {
+        const normalizedValue = this.options.caseSensitive ? value : value.toLowerCase();
+
+        return this.mergeUniqueItems([
+            ...instance.createdItems,
+            ...(Array.isArray(this.options.data) ? this.options.data : [])
+        ]).find(item => {
+            const itemValue = this.options.caseSensitive ? item.value : item.value.toLowerCase();
+            return itemValue === normalizedValue;
+        });
+    }
+
+    createSelectionFromInput(instance) {
+        const rawValue = instance.input.value.trim();
+        if (!rawValue) return false;
+
+        const existingItem = this.getExistingItemByValue(instance, rawValue);
+        if (existingItem) {
+            if (this.options.maxSelections > 1 && instance.selections.some(selection => selection.key === existingItem.key)) {
+                this.hideDropdown(instance);
+                instance.input.value = '';
+                return false;
+            }
+
+            this.selectItem(instance, existingItem.key, existingItem.value);
+            return true;
+        }
+
+        const createdItem = this.options.createItem
+            ? this.options.createItem(rawValue, instance)
+            : { key: rawValue, value: rawValue };
+
+        if (!createdItem || createdItem.key == null || createdItem.value == null) {
+            console.error('AvalynxAutocomplete: createItem must return an object with key and value');
+            return false;
+        }
+
+        const normalizedItem = {
+            key: String(createdItem.key),
+            value: String(createdItem.value)
+        };
+
+        if (!instance.createdItems.some(item => item.key === normalizedItem.key)) {
+            instance.createdItems.push(normalizedItem);
+        }
+
+        this.selectItem(instance, normalizedItem.key, normalizedItem.value);
+        return true;
+    }
+
     handleKeydown(e, instance) {
         const { dropdown } = instance;
         const items = dropdown.querySelectorAll('.avalynx-autocomplete-item');
         const activeItem = dropdown.querySelector('.avalynx-autocomplete-item.active');
         let activeIndex = activeItem ? parseInt(activeItem.dataset.index) : -1;
+        const usesPlainEnterShortcut = this.createShortcut &&
+            this.createShortcut.key === 'enter' &&
+            !this.createShortcut.modKey &&
+            !this.createShortcut.ctrlKey &&
+            !this.createShortcut.altKey &&
+            !this.createShortcut.shiftKey &&
+            !this.createShortcut.metaKey;
+
+        if (this.matchesCreateShortcut(e) && instance.input.value.trim() !== '') {
+            if (!activeItem || !usesPlainEnterShortcut) {
+                e.preventDefault();
+                this.createSelectionFromInput(instance);
+                return;
+            }
+        }
 
         switch (e.key) {
             case 'ArrowDown':
@@ -474,7 +691,6 @@ class AvalynxAutocomplete {
                 this.hideDropdown(instance);
                 break;
             case 'Backspace':
-                // Im Inline-Modus: letzten Tag löschen wenn Input leer
                 if (this.options.tagsPosition === 'inline' &&
                     this.options.maxSelections > 1 &&
                     instance.input.value === '' &&

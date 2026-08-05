@@ -3,7 +3,7 @@
  *
  * AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
  *
- * @version 1.0.5
+ * @version 1.0.6
  * @license MIT
  * @author https://github.com/avalynx/avalynx-form/graphs/contributors
  * @website https://github.com/avalynx/
@@ -12,12 +12,12 @@
  *
  * @param {string} id - The ID of the element to attach the form to.
  * @param {object} options - An object containing the following keys:
- * @param {object} options.apiParams - Additional parameters to be sent with the form data (default: `{}`).
- * @param {object} options.loader - An instance of AvalynxLoader to use as the loader for the modal (default: `null`).
- * @param {function} options.onSuccess - A callback function to be executed when the form submission is successful (default: `null`).
- * @param {function} options.onError - A callback function to be executed when the form submission fails (default: `null`).
- * @param {function} options.onBeforeSubmit - A callback function to be executed before the form submission (default: `null`).
- * @param {function} options.onAfterSubmit - A callback function to be executed after the form submission (default: `null`).
+ * @param {object} options.apiParams - Additional parameters to be sent with the form data (default: {}).
+ * @param {object} options.loader - An instance of AvalynxLoader to use as the loader for the form (default: null).
+ * @param {function} options.onSuccess - A callback function to be executed when the form submission is successful (default: null).
+ * @param {function} options.onError - A callback function to be executed when the form submission fails (default: null).
+ * @param {function} options.onBeforeSubmit - A callback function to be executed before the form submission (default: null).
+ * @param {function} options.onAfterSubmit - A callback function to be executed after the form submission (default: null).
  *
  */
 
@@ -141,7 +141,8 @@ export class AvalynxForm {
     }
 
     showInvalidFeedback(key, value) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
+        const escapedKey = CSS.escape(key);
+        const elements = document.querySelectorAll(`#${escapedKey}, [name="${escapedKey}"], [name="${escapedKey}[]"], [name^="${escapedKey}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {
@@ -160,7 +161,8 @@ export class AvalynxForm {
     }
 
     clearInvalidFeedback(key) {
-        const elements = document.querySelectorAll(`#${key}, [name="${key}"], [name="${key}[]"], [name^="${key}\\["]`);
+        const escapedKey = CSS.escape(key);
+        const elements = document.querySelectorAll(`#${escapedKey}, [name="${escapedKey}"], [name="${escapedKey}[]"], [name^="${escapedKey}\\["]`);
         elements.forEach(element => {
             const parentElement = element.closest('.form-group') || element.parentElement;
             if (parentElement !== null) {

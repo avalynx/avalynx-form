@@ -1,12 +1,14 @@
 # AvalynxForm
 
-[![npm version](https://img.shields.io/npm/v/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
-[![npm downloads](https://img.shields.io/npm/dt/avalynx-form)](https://www.npmjs.com/package/avalynx-form)
-[![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/avalynx-form)](https://www.jsdelivr.com/package/npm/avalynx-form)
-[![License](https://img.shields.io/npm/l/avalynx-form)](LICENSE)
-[![Tests](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/gh/avalynx/avalynx-form/branch/main/graph/badge.svg)](https://codecov.io/gh/avalynx/avalynx-form)
-[![GitHub stars](https://img.shields.io/github/stars/avalynx/avalynx-form?style=flat&logo=github)](https://github.com/avalynx/avalynx-form)
+[![npm version](https://jbs-newmedia.de/badge/npm/avalynx-form/version.svg)](https://www.npmjs.com/package/avalynx-form)
+[![npm downloads](https://jbs-newmedia.de/badge/npm/avalynx-form/download.svg)](https://www.npmjs.com/package/avalynx-form)
+[![Composer version](https://jbs-newmedia.de/badge/composer/avalynx/avalynx-form/version.svg)](https://packagist.org/packages/avalynx/avalynx-form)
+[![Composer downloads](https://jbs-newmedia.de/badge/composer/avalynx/avalynx-form/download.svg)](https://packagist.org/packages/avalynx/avalynx-form)
+[![jsDelivr](https://jbs-newmedia.de/badge/jsdelivr/avalynx-form/hits.svg)](https://www.jsdelivr.com/package/npm/avalynx-form)
+[![License](https://jbs-newmedia.de/badge/npm/avalynx-form/license.svg)](LICENSE)
+[![Tests](https://jbs-newmedia.de/badge/github/avalynx/avalynx-form/tests.svg)](https://github.com/avalynx/avalynx-form/actions/workflows/tests.yml)
+[![codecov](https://jbs-newmedia.de/badge/codecov/avalynx/avalynx-form/coverage.svg)](https://codecov.io/gh/avalynx/avalynx-form)
+[![GitHub stars](https://jbs-newmedia.de/badge/github/avalynx/avalynx-form/stars.svg)](https://github.com/avalynx/avalynx-form)
 
 AvalynxForm is a lightweight, customizable form handling library for web applications. Based on Bootstrap >=5.3 without any framework dependencies.
 
@@ -16,7 +18,7 @@ AvalynxForm is a lightweight, customizable form handling library for web applica
 - **Bootstrap Integration**: Designed for seamless integration with Bootstrap >= 5.3.
 - **Easy to Use**: Simple API for creating and managing forms within your web applications.
 
-## Example
+## Examples
 
 Here's a simple example of how to use AvalynxForm in your project:
 
@@ -51,7 +53,7 @@ Replace `path/to/avalynx-form.js` with the actual path to the file in your proje
 AvalynxForm is also available via [jsDelivr](https://www.jsdelivr.com/). You can include it in your project like this:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.5/dist/js/avalynx-form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/avalynx-form@1.0.6/dist/js/avalynx-form.js"></script>
 ```
 
 Make sure to also include Bootstrap's JS/CSS in your project to ensure AvalynxForm displays correctly.
