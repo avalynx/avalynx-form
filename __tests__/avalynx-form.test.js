@@ -414,6 +414,18 @@ describe('AvalynxForm', () => {
             expect(feedbackElement.style.display).toBe('block');
         });
 
+        test('should render invalid feedback as text to prevent XSS', () => {
+            const form = new AvalynxForm('test-form');
+            const usernameInput = document.getElementById('username');
+            const feedbackElement = usernameInput.parentElement.querySelector('.invalid-feedback');
+
+            form.showInvalidFeedback('username', '<img src=x onerror="alert(1)">Invalid');
+
+            expect(feedbackElement.innerHTML).not.toContain('<img');
+            expect(feedbackElement.innerHTML).toContain('&lt;img src=x onerror="alert(1)"&gt;Invalid');
+            expect(feedbackElement.textContent).toBe('<img src=x onerror="alert(1)">Invalid');
+        });
+
         test('should handle multiple invalid fields from response', () => {
             const form = new AvalynxForm('test-form');
             const response = {
